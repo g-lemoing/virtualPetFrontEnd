@@ -20,7 +20,7 @@ const Login = () => {
 
       const token = response.data.token;
       localStorage.setItem("token", token);
-      navigate("/dashboard");
+      navigate("/pets");
     } catch (err) {
       setError("Credenciales incorrectas. Inténtalo de nuevo.");
     }
