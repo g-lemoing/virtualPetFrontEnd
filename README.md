@@ -1,8 +1,3 @@
-# React + Vite
+# Aplicación front-end de la mascota virtual
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Este proyecto constituye la parte front-end de una aplicación destinada a crear y cuidar mascotas virtuales. Incluye identificación y autenticación mediante Json Web Token. Un usuario registrado puede cuidar sus mascotas virtuales y crear nuevas, interactuar con ellas, ver el conjunto de mascotas que posee, y también puede eliminarlas. Existen dos roles de usuario: el rol USER permite al usuario autenticado acceder a sus propias mascotas mientras el rol ADMIN permite acceder a las mascotas de todos los usuarios.
