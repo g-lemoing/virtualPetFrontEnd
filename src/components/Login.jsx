@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import homeBackground from "../assets/home.png";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -27,8 +28,14 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md text-center border border-gray-300">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100"
+    style={{
+      backgroundImage: `url(${homeBackground})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+    }}>
+      <div className="bg-white/60 p-8 rounded-2xl shadow-xl w-80 max-w-md text-center border border-gray-300 backdrop-blur-sm">
         <h2 className="text-3xl font-bold mb-6 text-gray-700">Iniciar Sesión</h2>
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         <form onSubmit={handleLogin}>
