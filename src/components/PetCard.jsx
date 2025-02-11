@@ -1,6 +1,7 @@
 import { Trash2 } from "lucide-react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import LevelItem from "./LevelItem";
 
 const PetCard = ({ pet, onDelete }) => {
   const navigate = useNavigate();
@@ -29,24 +30,9 @@ const PetCard = ({ pet, onDelete }) => {
         />
       </div>
       <div className="space-y-2">
-        <div>
-          <span className="text-sm font-medium">Energía</span>
-          <div className="w-full bg-gray-200 h-2 rounded-full">
-            <div className="bg-blue-500 h-2 rounded-full" style={{ width: `${pet.petEnergyLevel * 100}%` }}></div>
-          </div>
-        </div>
-        <div>
-          <span className="text-sm font-medium">Hambre</span>
-          <div className="w-full bg-gray-200 h-2 rounded-full">
-            <div className="bg-red-500 h-2 rounded-full" style={{ width: `${pet.petHungryLevel * 100}%` }}></div>
-          </div>
-        </div>
-        <div>
-          <span className="text-sm font-medium">Felicidad</span>
-          <div className="w-full bg-gray-200 h-2 rounded-full">
-            <div className="bg-green-500 h-2 rounded-full" style={{ width: `${pet.petMood * 100}%` }}></div>
-          </div>
-        </div>
+      <LevelItem label="Energía" value={pet.petEnergyLevel} color="bg-blue-500" />
+      <LevelItem label="Hambre" value={pet.petHungryLevel} color="bg-red-500" />
+      <LevelItem label="Felicidad" value={pet.petMood} color="bg-green-500" />
       </div>
     </div>
   );
