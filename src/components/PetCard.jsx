@@ -1,16 +1,22 @@
 import { Trash2 } from "lucide-react";
 import PropTypes from "prop-types";
-
+import { useNavigate } from "react-router-dom";
 
 const PetCard = ({ pet, onDelete }) => {
-
+  const navigate = useNavigate();
   const imagePath = `/src/assets/${pet.animal}_${pet.petColor}.png`;
 
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-lg w-60 relative">
+    <div className="bg-white p-6 rounded-2xl shadow-lg w-60 relative cursor-pointer"
+    onClick={() => navigate(`/pet/${pet.petUserId}`, { state: { pet } })}>
+
       <div className="flex justify-between items-center mb-2">
         <h3 className="text-xl font-semibold">{pet.petName}</h3>
-        <button onClick={() => onDelete(pet.petUserId)} className="text-red-500 hover:text-red-700">
+        <button onClick={(event) => {
+          event.stopPropagation
+          onDelete(pet.petUserId)
+        }} 
+          className="text-red-500 hover:text-red-700">
           <Trash2 size={20} />
         </button>
       </div>
