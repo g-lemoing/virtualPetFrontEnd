@@ -26,7 +26,8 @@ git clone https://github.com/g-lemoing/virtualPetFrontEnd.git
 ## Ejecución
 1. Abrir la terminal en el IDE y navegar hasta el directorio raíz del proyecto React
 2. Ejecutar el comando > npm run dev
-Eso iniciará el servidor, con la URL donde estará disponible la aplicación (en principio localhost:5173)
+Eso iniciará el servidor, con la URL donde estará disponible la aplicación (en principio
+http://localhost:5173/)
 3. Abrir el navegador e ir a la URL indicada, y empezar a usar la aplicación
 
 ## Contribución
