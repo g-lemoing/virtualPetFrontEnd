@@ -25,8 +25,15 @@ const PetsList = () => {
         },
       });
       setPets(response.data);
+      
     } catch (err) {
-      setError("Error al cargar las mascotas");
+      if(err.status === 403){
+        console.error("Token caducado o no autorizado. Redirigiendo al login...")
+        localStorage.removeItem("token"); // Elimina el token caducado
+        navigate("/login"); // Redirige al login
+      }else{
+        setError("Error al cargar las mascotas");
+      }
     } finally {
       setLoading(false);
     }
