@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "./components/Login";
-import Register from "./components/Register";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import PetsList from "./pages/PetsPage";
 import PetPage from "./pages/PetPage";
 import ProtectedRoute from "./components/ProtectedRoute";
