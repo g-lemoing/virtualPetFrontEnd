@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import LevelItem from "./LevelItem";
 import { useCallback } from "react";
+import config from "../config";
 
 const PetCard = ({ pet, fetchPets }) => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const PetCard = ({ pet, fetchPets }) => {
       }
       try {
         const response = await fetch(
-          `http://localhost:8080/pet/delete/${pet.petUserId}`,
+          `${config.API_BASE_URL}/pet/delete/${pet.petUserId}`,
           {
             method: "DELETE",
             headers: {

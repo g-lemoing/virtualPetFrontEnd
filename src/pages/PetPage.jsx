@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import LevelItem from "/src/components/LevelItem";
+import config from "../config";
 
 const PetPage = () => {
   const location = useLocation();
@@ -24,14 +25,15 @@ const PetPage = () => {
     { id: "backGround", src: imageBgDef, zIndex: 0 },
     { id: "mainImage", src: imagePathDef, zIndex: 10 },
   ];
+
   const [layers, setLayers] = useState(initialLayers);
 
-  const addLayer = (id, Src) => {
+  const addLayer = (id, Src, z) => {
     setLayers((prev) => {
       if (prev.some((layer) => layer.id === id)) {
         return prev;
       }
-      return [...prev, { id: id, src: Src, zIndex: 30 }];
+      return [...prev, { id: id, src: Src, zIndex: z }];
     });
   };
 
@@ -53,7 +55,7 @@ const PetPage = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/pet/update/${pet.petUserId}/${action}`,
+        `${config.API_BASE_URL}/pet/update/${pet.petUserId}/${action}`,
         {
           method: "PUT",
           headers: {
@@ -105,7 +107,7 @@ const PetPage = () => {
           <button
             onClick={() => {
               resetLayers();
-              addLayer("food", imageFood);
+              addLayer("food", imageFood, 30);
               updatePetStatus("FEED");
             }}
             className="p-3 bg-blue-500 text-white rounded-lg cursor-pointer"
@@ -115,7 +117,7 @@ const PetPage = () => {
           <button
             onClick={() => {
               resetLayers();
-              addLayer("sleep", imageSleep);
+              addLayer("sleep", imageSleep, 30);
               updatePetStatus("SLEEP");
             }}
             className="p-3 bg-blue-500 text-white rounded-lg"
@@ -125,7 +127,7 @@ const PetPage = () => {
           <button
             onClick={() => {
               resetLayers();
-              addLayer("play", imagePlay);
+              addLayer("play", imagePlay, 30);
               updatePetStatus("PLAY");
             }}
             className="p-3 bg-blue-500 text-white rounded-lg"
@@ -135,8 +137,8 @@ const PetPage = () => {
           <button
             onClick={() => {
               resetLayers();
-              addLayer("read", imageRead);
-              updatePetStatus("WORK");
+              addLayer("read", imageRead, 30);
+              updatePetStatus("READ");
             }}
             className="p-3 bg-blue-500 text-white rounded-lg"
           >
@@ -147,13 +149,17 @@ const PetPage = () => {
               const hasBeach = layers.some((layer) =>
                 layer.src.includes("beach")
               );
-              layers.some((layer) => layer.id.includes("sunglasses"))
-                ? removeLayer("sunglasses")
-                : addLayer(
-                    "sunglasses",
-                    hasBeach ? imageSunglassesBeach : imageSunglassesDef
-                  );
-              updatePetStatus("SUNGLASSES");
+              if (
+                layers.some((layer) => layer.id.includes("sunglasses"))
+              ) {
+                removeLayer("sunglasses");
+              } else {
+                addLayer(
+                  "sunglasses",
+                  hasBeach ? imageSunglassesBeach : imageSunglassesDef
+                , 40);
+                updatePetStatus("SUNGLASSES");
+              }
             }}
             className="p-3 bg-blue-500 text-white rounded-lg"
           >
@@ -161,10 +167,10 @@ const PetPage = () => {
           </button>
           <button
             onClick={() => {
-              resetLayers();
-              addLayer("backGround", imageBgBeach);
-              addLayer("mainImage", imagePetBeach);
-              addLayer("cocktail", imageCocktail);
+              setLayers([]);
+              addLayer("backGround", imageBgBeach, 0);
+              addLayer("mainImage", imagePetBeach, 10);
+              addLayer("cocktail", imageCocktail, 30);
               updatePetStatus("BEACH");
             }}
             className="p-3 bg-blue-500 text-white rounded-lg cursor-pointer"
