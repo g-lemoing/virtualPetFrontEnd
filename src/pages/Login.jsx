@@ -21,7 +21,12 @@ const Login = () => {
       });
 
       const token = response.data.token;
+      const userName = response.data.userName;
+      const userRole = response.data.userRole;
       localStorage.setItem("token", token);
+      localStorage.setItem("userName", userName);
+      localStorage.setItem("userRole", userRole);
+
       navigate("/pets");
     } catch (err) {
       setError("Credenciales incorrectas. Inténtalo de nuevo.");
