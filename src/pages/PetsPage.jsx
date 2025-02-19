@@ -1,8 +1,10 @@
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
+import config from "../config";
 import { PlusCircle, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import PetCard from "/src/components/PetCard";
+import homeBackground from "../assets/home.png";
 
 const PetsList = () => {
   const [pets, setPets] = useState([]);
@@ -19,13 +21,13 @@ const PetsList = () => {
       return;
     }
     try {
-      const response = await axios.get("http://localhost:8080/pet/read", {
+      const response = await axios.get(`${config.API_BASE_URL}/pet/read`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       setPets(response.data);
-      
+
     } catch (err) {
       if(err.status === 403){
         console.error("Token caducado o no autorizado. Redirigiendo al login...")
@@ -56,7 +58,7 @@ const PetsList = () => {
     const token = localStorage.getItem("token");
     if (!token) return;
     try {
-      await axios.post("http://localhost:8080/pet/create", newPet, {
+      await axios.post(`${config.API_BASE_URL}/pet/create`, newPet, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json"
@@ -91,7 +93,14 @@ const PetsList = () => {
         ))}
       </div>
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center"
+            style={{
+              backgroundImage: `url(${homeBackground})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }}
+        >
           <div className="bg-white p-6 rounded-lg shadow-lg w-96">
             <h3 className="text-xl font-bold mb-4">Crear nueva mascota</h3>
             <input type="text" placeholder="Nombre" className="w-full p-2 mb-3 border rounded" value={newPet.petName} onChange={(e) => setNewPet({ ...newPet, petName: e.target.value })} />
