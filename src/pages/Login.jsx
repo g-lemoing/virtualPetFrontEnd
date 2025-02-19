@@ -2,43 +2,44 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import homeBackground from "../assets/home.png";
+import config from "../config";
 
-
-const Register = () => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleRegister = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
 
     try {
-      await axios.post("http://localhost:8080/auth/signup", {
-        userName: username, // Asegúrate de que coincide con el backend
+      const response = await axios.post(`${config.API_BASE_URL}/auth/login`, {
+        userName: username,
         password,
       });
 
-      alert("Registro exitoso. Ahora puedes iniciar sesión.");
-      navigate("/login"); // Redirige al login tras el registro exitoso
+      const token = response.data.token;
+      localStorage.setItem("token", token);
+      navigate("/pets");
     } catch (err) {
-      setError("Error al registrar. Inténtalo de nuevo.");
+      setError("Credenciales incorrectas. Inténtalo de nuevo.");
     }
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100"
-        style={{
-          backgroundImage: `url(${homeBackground})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}>
+    style={{
+      backgroundImage: `url(${homeBackground})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+    }}>
       <div className="bg-white/60 p-8 rounded-2xl shadow-xl w-80 max-w-md text-center border border-gray-300 backdrop-blur-sm">
-        <h2 className="text-3xl font-bold mb-6 text-gray-700">Registrarse</h2>
+        <h2 className="text-3xl font-bold mb-6 text-gray-700">Iniciar Sesión</h2>
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-        <form onSubmit={handleRegister}>
+        <form onSubmit={handleLogin}>
           <div className="mb-4 text-left">
             <label className="block text-gray-600 font-medium">Usuario</label>
             <input
@@ -49,7 +50,7 @@ const Register = () => {
               required
             />
           </div>
-          <div className="mb-4 text-left">
+          <div className="mb-6 text-left">
             <label className="block text-gray-600 font-medium">Contraseña</label>
             <input
               type="password"
@@ -61,12 +62,12 @@ const Register = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600"
+            className="w-full bg-blue-500 text-black p-3 rounded-lg hover:bg-blue-600 transition duration-300"
           >
-            Registrarse
+            Iniciar Sesión
           </button>
-          <div className="p-3 text-center">
-            <a className= "text-gray-600 font-medium" href="/login">¡Ya tengo cuenta, gracias!</a>
+          <div className="text-center p-3">
+            <a className="text-gray-600 font-medium " href="/register">¿No tienes cuenta todavía?</a>
           </div>
         </form>
       </div>
@@ -74,4 +75,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
