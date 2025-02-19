@@ -5,9 +5,10 @@ import LevelItem from "./LevelItem";
 import { useCallback } from "react";
 import config from "../config";
 
-const PetCard = ({ pet, fetchPets }) => {
+const PetCard = ({ pet, fetchPets, userRole }) => {
   const navigate = useNavigate();
   const imagePath = `/src/assets/${pet.animal}_${pet.petColor}.png`;
+  const ownerid = userRole === "ROLE_ADMIN" ? "(" + pet.userId + ")" : null;
 
   const handleDeletePet = useCallback(
     async (pet) => {
@@ -48,15 +49,18 @@ const PetCard = ({ pet, fetchPets }) => {
     >
       <div className="flex justify-between items-center mb-2">
         <h3 className="text-xl font-semibold">{pet.petName}</h3>
-        <button
-          onClick={(event) => {
-            event.stopPropagation();
-            handleDeletePet(pet);
-          }}
-          className="text-red-500 hover:text-red-700 cursor-pointer"
-        >
-          <Trash2 size={20} />
-        </button>
+        <div className="flex items-center gap-x-2">
+          <h4 className="text-xl font-semibold">{ownerid}</h4>
+          <button
+            onClick={(event) => {
+              event.stopPropagation();
+              handleDeletePet(pet);
+            }}
+            className="text-red-500 hover:text-red-700 cursor-pointer"
+          >
+            <Trash2 size={20} />
+          </button>
+        </div>
       </div>
       <div className="w-full h-40 bg-white rounded-lg mb-4 flex items-center justify-center overflow-hidden">
         {" "}
@@ -79,6 +83,7 @@ const PetCard = ({ pet, fetchPets }) => {
 
 PetCard.propTypes = {
   pet: PropTypes.shape({
+    userId: PropTypes.number.isRequired,
     petUserId: PropTypes.number.isRequired,
     petName: PropTypes.string.isRequired,
     petEnergyLevel: PropTypes.number.isRequired,
@@ -88,6 +93,7 @@ PetCard.propTypes = {
     petColor: PropTypes.string,
   }).isRequired,
   fetchPets: PropTypes.func.isRequired,
+  userRole: PropTypes.string.isRequired,
 };
 
 export default PetCard;
